@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="favicon.png" type="image/png" />
+  <link rel="stylesheet" href="styles.css" />
+  <title>Alvingky Sharing Stories - Tempat kamu berbagi cerita</title>
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  <!-- Google Font: Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+  <!-- Feather Icons -->
+  <script src="https://unpkg.com/feather-icons"></script>
+
+</head>
+
+<body>
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <header>
+    <div class="main-header container">
+      <a class="brand-name" href="#/">Alvingky Sharing Stories</a>
+
+      <nav id="navigation-drawer" class="navigation-drawer">
+        <ul id="nav-list" class="nav-list">
+          <li><a href="#/">Beranda</a></li>
+          <li><a href="#/add">Tambah Cerita</a></li>
+          <li id="nav-guest" style="display: none;"><a href="#/guest">Tambah Cerita (Tamu)</a></li>
+          <li><a href="#/about">Tentang</a></li>
+          <li id="nav-login"><a href="#/login">Masuk</a></li>
+          <li id="nav-register"><a href="#/register">Daftar</a></li>
+          <li id="nav-logout" style="display: none;"><a href="#" id="logout-btn">Keluar</a></li>
+        </ul>
+      </nav>
+
+      <button id="drawer-button" class="drawer-button" aria-label="Buka navigasi">☰</button>
+    </div>
+  </header>
+
+  <main id="main-content" class="main-content" tabindex="-1">
+    <!-- Konten halaman akan dimuat dinamis oleh JS -->
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Alvingky Sharing Stories - Dibuat oleh Yudha Rizky Alvingky</p>
+    </div>
+  </footer>
+
+  <script src="app.js" type="module"></script>
+  <script>
+    feather.replace(); // aktifkan ikon
+  </script>
+
+</body>
+
+</html>
