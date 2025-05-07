@@ -3,8 +3,8 @@ import AboutPage from "../pages/about/about-page";
 import LoginPage from "../pages/login/login-page";
 import RegisterPage from "../pages/register/register-page";
 import DetailPage from "../pages/detail/detail-page";
-import AddStoryPage from "../pages/story/add-story-page";
-import GuestStoryPage from "../pages/story/guest-story-page";
+import AddStoryPage from "../pages/story/add/add-story-page";
+import GuestStoryPage from "../pages/story/guest/guest-story-page";
 
 import { isLoggedIn } from "../utils/auth";
 

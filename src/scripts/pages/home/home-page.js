@@ -1,6 +1,10 @@
-import { getData } from "../../data/api";
+import HomePresenter from "./home-presenter";
 
 export default class HomePage {
+  constructor() {
+    this.presenter = new HomePresenter(this);
+  }
+
   sanitizeContent(content) {
     return content
       .replace(/&/g, "&amp;")
@@ -37,6 +41,12 @@ export default class HomePage {
           </div>
         </div>
 
+        <div id="map-section" class="map-section">
+          <h2><i data-feather="map-pin" class="icon"></i> Lokasi Cerita</h2>
+          <div id="storyMap" style="height: 300px; border-radius: 8px; margin-bottom: 20px;"></div>
+        </div>
+
+        <h2><i data-feather="list" class="icon"></i> Daftar Cerita</h2>
         <div id="story-list" class="story-list">
           <p class="loading">Memuat cerita...</p>
         </div>
@@ -51,79 +61,35 @@ export default class HomePage {
     const nextPageBtn = document.querySelector("#nextPage");
     const pageNumberEl = document.querySelector("#pageNumber");
 
-    let currentPage = 1;
-    let currentLocation = 0;
-    const size = 5;
-
-    const renderStories = async () => {
-      storyListElement.innerHTML = `<p class="loading">Memuat cerita...</p>`;
-      pageNumberEl.textContent = currentPage;
-      prevPageBtn.disabled = currentPage === 1;
-
-      try {
-        const stories = await getData({
-          page: currentPage,
-          size,
-          location: currentLocation,
-        });
-
-        if (!stories || stories.length === 0) {
-          storyListElement.innerHTML = `<p class="empty">Belum ada cerita untuk ditampilkan.</p>`;
-          nextPageBtn.disabled = true;
-          return;
-        }
-
-        storyListElement.innerHTML = stories
-          .map(
-            (story) => `
-            <a href="#/story/${story.id}" class="story-link">
-              <article class="story-card">
-                <img src="${story.photoUrl}" alt="Foto oleh ${story.name
-              }" class="story-image" />
-                <div class="story-content">
-                  <h2>${story.name}</h2>
-                  <p>${this.sanitizeContent(story.description)}</p>
-                  <time datetime="${story.createdAt}">
-                    ${new Date(story.createdAt).toLocaleString()}
-                  </time>
-                </div>
-              </article>
-            </a>
-          `
-          )
-          .join("");
-
-        // Disable next if jumlah story < size
-        nextPageBtn.disabled = stories.length < size;
-      } catch (error) {
-        storyListElement.innerHTML = `<p class="error">Gagal memuat cerita: ${error.message}</p>`;
-
-        if (error.message.includes('Token tidak ditemukan')) {
-          setTimeout(() => {
-            window.location.hash = '/login';
-          }, 2000); // Redirect setelah 2 detik
-        }
-      }
-    };
+    this.storyListElement = storyListElement;
+    this.pageNumberEl = pageNumberEl;
+    this.prevPageBtn = prevPageBtn;
+    this.nextPageBtn = nextPageBtn;
 
     locationFilter.addEventListener("change", (e) => {
-      currentLocation = parseInt(e.target.value);
-      currentPage = 1;
-      renderStories();
+      const location = parseInt(e.target.value);
+      this.presenter.changeLocation(location);
     });
 
     prevPageBtn.addEventListener("click", () => {
-      if (currentPage > 1) {
-        currentPage--;
-        renderStories();
+      if (this.presenter.currentPage > 1) {
+        this.presenter.changePage(this.presenter.currentPage - 1);
       }
     });
 
     nextPageBtn.addEventListener("click", () => {
-      currentPage++;
-      renderStories();
+      this.presenter.changePage(this.presenter.currentPage + 1);
     });
 
-    renderStories();
+    // Initialize map
+    this.presenter.initMap();
+
+    // Render stories
+    this.presenter.renderStories();
+
+    // Initialize Feather icons
+    if (window.feather) {
+      window.feather.replace();
+    }
   }
 }

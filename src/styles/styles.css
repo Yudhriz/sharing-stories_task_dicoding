@@ -62,7 +62,6 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 30px;
 }
 
 .brand-name {
@@ -70,6 +69,11 @@ header {
   font-weight: bold;
   text-decoration: none;
   color: var(--color-text);
+  padding: 8px 12px;
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
 }
 
 .navigation-drawer {
@@ -91,7 +95,7 @@ header {
 }
 
 .drawer-button {
-  padding: 8px;
+  padding: 12px;
   border: 0;
   border-radius: 4px;
   background-color: transparent;
@@ -99,6 +103,8 @@ header {
   font-size: 28px;
   color: var(--color-text);
   cursor: pointer;
+  min-height: 44px;
+  min-width: 44px;
 }
 
 .nav-list {
@@ -109,11 +115,14 @@ header {
 }
 
 .nav-list li a {
-  padding: 6px 10px;
-  display: block;
+  padding: 12px 16px;
+  display: inline-block;
   color: var(--color-text);
   text-decoration: none;
+  min-height: 44px;
+  min-width: 44px;
 }
+
 .nav-list li a:hover {
   text-decoration: underline;
 }
@@ -137,6 +146,62 @@ header {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+}
+
+.map-section {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.map-section h2, 
+.container h2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  color: #333;
+  font-size: 1.5rem;
+}
+
+.map-popup {
+  max-width: 250px;
+  text-align: center;
+}
+
+.map-popup h3 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+.popup-image {
+  width: 100%;
+  max-height: 150px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.popup-link {
+  display: inline-block;
+  margin-top: 8px;
+  color: #4CAF50;
+  text-decoration: none;
+  font-weight: 500;
+  /* Memastikan ukuran minimal area sentuh */
+  padding: 10px;
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.popup-link:hover {
+  text-decoration: underline;
+}
+
+#storyMap {
+  z-index: 1;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
 }
 
 .story-card {
@@ -197,7 +262,7 @@ header {
 }
 
 .pagination-btn {
-  padding: 8px 12px;
+  padding: 12px 16px;
   border: 1px solid var(--color-gray);
   background-color: var(--color-accent);
   color: #000;
@@ -206,7 +271,13 @@ header {
   cursor: pointer;
   font-weight: bold;
   transition: background-color 0.3s;
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
+
 .pagination-btn:disabled {
   background-color: var(--color-gray);
   cursor: not-allowed;
@@ -300,12 +371,14 @@ header {
 
 .camera-controls button,
 .camera-controls select {
-  padding: 0.5rem 1rem;
+  padding: 12px 16px;
   border-radius: 8px;
   border: 1px solid var(--color-gray);
   background-color: var(--color-white);
   cursor: pointer;
   transition: background-color 0.3s ease;
+  min-height: 44px;
+  min-width: 44px;
 }
 
 .camera-controls button:hover,
@@ -323,11 +396,16 @@ header {
 .back-button {
   display: inline-block;
   margin-top: 1rem;
-  padding: 0.5rem 1rem;
+  padding: 12px 16px;
   background-color: #4CAF50;
   color: white;
   border-radius: 4px;
   text-decoration: none;
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .back-button:hover {

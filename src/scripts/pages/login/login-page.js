@@ -1,6 +1,10 @@
-import { loginUser } from "../../data/api";
+import LoginPresenter from "./login-presenter";
 
 export default class LoginPage {
+  constructor() {
+    this.presenter = new LoginPresenter(this);
+  }
+
   async render() {
     return `
       <section class="page-transition text-center">
@@ -20,21 +24,12 @@ export default class LoginPage {
 
   async afterRender() {
     const form = document.querySelector("#loginForm");
-    const messageBox = document.querySelector("#login-message");
 
-    form.addEventListener("submit", async (e) => {
+    form.addEventListener("submit", (e) => {
       e.preventDefault();
       const email = form.email.value;
       const password = form.password.value;
-
-      try {
-        const result = await loginUser({ email, password });
-        localStorage.setItem("token", result.token);
-        messageBox.innerText = "Login berhasil!";
-        window.location.hash = "/";
-      } catch (error) {
-        messageBox.innerText = `Login gagal: ${error.message}`;
-      }
+      this.presenter.handleLogin(email, password);
     });
   }
 }

@@ -1,6 +1,10 @@
-import { registerUser } from "../../data/api";
+import RegisterPresenter from "./register-presenter";
 
 export default class RegisterPage {
+  constructor() {
+    this.presenter = new RegisterPresenter(this);
+  }
+
   async render() {
     return `
       <section class="page-transition text-center">
@@ -23,21 +27,13 @@ export default class RegisterPage {
 
   async afterRender() {
     const form = document.querySelector("#registerForm");
-    const messageBox = document.querySelector("#register-message");
 
-    form.addEventListener("submit", async (e) => {
+    form.addEventListener("submit", (e) => {
       e.preventDefault();
       const name = form.name.value;
       const email = form.email.value;
       const password = form.password.value;
-
-      try {
-        await registerUser({ name, email, password });
-        messageBox.innerText = "Registrasi berhasil! Silakan login.";
-        window.location.hash = "/login";
-      } catch (error) {
-        messageBox.innerText = `Registrasi gagal: ${error.message}`;
-      }
+      this.presenter.handleRegister(name, email, password);
     });
   }
 }

@@ -56,6 +56,7 @@ class App {
       document.startViewTransition(async () => {
         this.#content.innerHTML = await page.render();
         await page.afterRender?.();
+        feather.replace();
       });
     } else {
       this.#content.innerHTML = await page.render();
