@@ -1,5 +1,20 @@
 import "../styles/styles.css";
 import App from "./pages/app";
+import { registerServiceWorker } from "./utils";
+
+import IDBHelper from "./data/database";
+
+document
+  .getElementById("clear-cache-button")
+  .addEventListener("click", async () => {
+    const confirmClear = confirm(
+      "Yakin ingin menghapus semua data cerita yang tersimpan offline?"
+    );
+    if (confirmClear) {
+      await IDBHelper.clearStories();
+      alert("Data offline berhasil dihapus.");
+    }
+  });
 
 const applyPageTransition = () => {
   const mainContent = document.querySelector("#main-content");
@@ -16,6 +31,7 @@ const updateNavigation = () => {
   const loginNav = document.getElementById("nav-login");
   const registerNav = document.getElementById("nav-register");
   const logoutNav = document.getElementById("nav-logout");
+  const addNav = document.getElementById("nav-add");
   const guestNav = document.getElementById("nav-guest");
   const logoutBtn = document.getElementById("logout-btn");
 
@@ -23,11 +39,13 @@ const updateNavigation = () => {
     if (loginNav) loginNav.style.display = "none";
     if (registerNav) registerNav.style.display = "none";
     if (logoutNav) logoutNav.style.display = "block";
+    if (addNav) addNav.style.display = "block";
     if (guestNav) guestNav.style.display = "none";
   } else {
     if (loginNav) loginNav.style.display = "block";
     if (registerNav) registerNav.style.display = "block";
     if (logoutNav) logoutNav.style.display = "none";
+    if (addNav) addNav.style.display = "none";
     if (guestNav) guestNav.style.display = "block";
   }
 
@@ -49,6 +67,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     navigationDrawer: document.querySelector("#navigation-drawer"),
   });
 
+  await registerServiceWorker();
+
   await app.renderPage();
   applyPageTransition();
   updateNavigation(); // Update nav saat load
@@ -59,4 +79,3 @@ document.addEventListener("DOMContentLoaded", async () => {
     updateNavigation(); // Update nav saat pindah halaman
   });
 });
-

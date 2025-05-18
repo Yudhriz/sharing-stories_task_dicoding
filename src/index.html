@@ -4,8 +4,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="shortcut icon" href="favicon.png" type="image/png" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="shortcut icon" href="favicon.ico" type="image/ico" />
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/icon/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/icon/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/icon/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/icon/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/icon/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/icon/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/icon/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/icon/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/icon/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/icon/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/icon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/icon/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/icon/favicon-16x16.png">
+  <link rel="manifest" href="/app.webmanifest">
+  <meta name="msapplication-TileColor" content="#FFB22C">
+  <meta name="msapplication-TileImage" content="/icon/ms-icon-144x144.png">
+  <meta name="theme-color" content="#FFB22C">
   <title>Alvingky Sharing Stories - Tempat kamu berbagi cerita</title>
   <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
@@ -22,29 +39,43 @@
 </head>
 
 <body>
-  <a href="#main-content" class="skip-link">Skip to content</a>
+  <a href="#main-content" class="skip-link" role="button" tabindex="0">Skip to content</a>
 
   <header>
     <div class="main-header container">
       <a class="brand-name" href="#/">Alvingky Sharing Stories</a>
 
+      <!-- Navigasi -->
       <nav id="navigation-drawer" class="navigation-drawer">
         <ul id="nav-list" class="nav-list">
           <li><a href="#/">Beranda</a></li>
-          <li><a href="#/add">Tambah Cerita</a></li>
-          <li id="nav-guest" style="display: none;"><a href="#/guest">Tambah Cerita (Tamu)</a></li>
+          <li id="nav-add"><a href="#/add">Tambah Cerita</a></li>
+          <li id="nav-guest"><a href="#/guest">Tambah Cerita (Tamu)</a></li>
           <li><a href="#/about">Tentang</a></li>
           <li id="nav-login"><a href="#/login">Masuk</a></li>
           <li id="nav-register"><a href="#/register">Daftar</a></li>
           <li id="nav-logout" style="display: none;"><a href="#" id="logout-btn">Keluar</a></li>
+          <button id="clear-cache-button">Hapus Data Offline</button>
+
+          <!-- Tombol Subscribe versi desktop -->
+          <li class="desktop-only">
+            <button id="subscribe-btn-desktop" class="subscribe-btn">Langganan <i data-feather="bell"
+                class="icon"></i></button>
+          </li>
         </ul>
       </nav>
 
-      <button id="drawer-button" class="drawer-button" aria-label="Buka navigasi">☰</button>
+      <!-- Bagian kanan: tombol drawer & mobile subscribe -->
+      <div class="header-actions">
+        <button id="subscribe-btn-mobile" class="subscribe-btn mobile-only">Langganan <i data-feather="bell"
+            class="icon"></i></button>
+        <button id="drawer-button" class="drawer-button" aria-label="Buka navigasi">☰</button>
+      </div>
     </div>
   </header>
 
   <main id="main-content" class="main-content" tabindex="-1">
+    <div id="mainContent"></div>
     <!-- Konten halaman akan dimuat dinamis oleh JS -->
   </main>
 
@@ -53,11 +84,6 @@
       <p>&copy; 2025 Alvingky Sharing Stories - Dibuat oleh Yudha Rizky Alvingky</p>
     </div>
   </footer>
-
-  <script src="app.js" type="module"></script>
-  <script>
-    feather.replace(); // aktifkan ikon
-  </script>
 
 </body>
 

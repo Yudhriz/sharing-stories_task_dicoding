@@ -2,7 +2,7 @@ import CONFIG from "../config";
 
 let currentMap = null;
 
-export function initializeMap(mapId, onMapClick) {
+export function initializeMap(mapId, onMapClick = null) {
   const mapContainer = document.getElementById(mapId);
   if (mapContainer._leaflet_id) {
     mapContainer._leaflet_id = null;
@@ -50,15 +50,27 @@ export function initializeMap(mapId, onMapClick) {
     .addTo(currentMap);
 
   let marker = null;
-  currentMap.on("click", (e) => {
-    const lat = e.latlng.lat;
-    const lon = e.latlng.lng;
 
-    if (marker) currentMap.removeLayer(marker);
-    marker = L.marker([lat, lon]).addTo(currentMap);
+  // Aktifkan klik hanya jika diberikan fungsi onMapClick
+  if (typeof onMapClick === "function") {
+    currentMap.on("click", (e) => {
+      try {
+        const lat = e.latlng.lat;
+        const lon = e.latlng.lng;
 
-    onMapClick({ lat, lon, marker });
-  });
+        // Tambahkan atau pindahkan marker
+        if (marker) {
+          currentMap.removeLayer(marker);
+        }
+
+        marker = L.marker([lat, lon]).addTo(currentMap);
+
+        onMapClick({ lat, lon });
+      } catch (error) {
+        console.error("Error saat memproses klik peta:", error);
+      }
+    });
+  }
 
   return currentMap;
 }

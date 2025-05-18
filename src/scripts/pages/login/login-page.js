@@ -32,4 +32,22 @@ export default class LoginPage {
       this.presenter.handleLogin(email, password);
     });
   }
+
+  showLoginSuccess() {
+    const messageDiv = document.getElementById("login-message");
+    messageDiv.textContent = "Login berhasil!";
+    messageDiv.style.color = "green";
+  }
+
+  showLoginError(message) {
+    const messageDiv = document.getElementById("login-message");
+    messageDiv.textContent = message;
+    messageDiv.style.color = "red";
+  }
+
+  onLoginSuccess(token) {
+    localStorage.setItem("token", token);
+    window.location.hash = "/"; // Redirect ke halaman utama
+    this.showLoginSuccess();
+  }
 }

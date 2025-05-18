@@ -5,8 +5,7 @@ import RegisterPage from "../pages/register/register-page";
 import DetailPage from "../pages/detail/detail-page";
 import AddStoryPage from "../pages/story/add/add-story-page";
 import GuestStoryPage from "../pages/story/guest/guest-story-page";
-
-import { isLoggedIn } from "../utils/auth";
+import NotFoundPage from "../pages/not-found/notFound";
 
 // Fungsi untuk mendapatkan rute dinamis
 const getRoutes = () => {
@@ -18,6 +17,7 @@ const getRoutes = () => {
     "/story/:id": new DetailPage(),
     "/add": new AddStoryPage(),
     "/guest": new GuestStoryPage(),
+    "*": new NotFoundPage(),
   };
 };
 

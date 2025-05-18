@@ -1,4 +1,5 @@
 import CONFIG from "../config";
+import IDBHelper from "./database";
 
 const ENDPOINTS = {
   REGISTER: `${CONFIG.BASE_URL}/register`,
@@ -52,15 +53,22 @@ export async function getData({ page = 1, size = 10, location = 0 } = {}) {
   url.searchParams.append("size", size);
   url.searchParams.append("location", location);
 
-  const response = await fetch(url.toString(), {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  try {
+    const response = await fetch(url.toString(), {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-  const data = await response.json();
-  if (!response.ok) throw new Error(data.message || "Gagal memuat data");
-  return data.listStory;
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || "Gagal memuat data");
+
+    await IDBHelper.putStories(data.listStory);
+    return data.listStory;
+  } catch (error) {
+    console.warn("Gagal mengambil dari API, ambil dari IndexedDB");
+    return await IDBHelper.getAllStories();
+  }
 }
 
 /**
@@ -70,16 +78,27 @@ export async function getDetailStory(id) {
   const token = localStorage.getItem("token");
   if (!token) throw new Error("Token tidak ditemukan.");
 
-  const response = await fetch(ENDPOINTS.GET_DETAIL(id), {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  try {
+    const response = await fetch(ENDPOINTS.GET_DETAIL(id), {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-  const data = await response.json();
-  if (!response.ok)
-    throw new Error(data.message || "Gagal mengambil detail cerita");
-  return data.story;
+    const data = await response.json();
+    if (!response.ok)
+      throw new Error(data.message || "Gagal mengambil detail cerita");
+
+    // Simpan ke IndexedDB
+    IDBHelper.putStory(data.story);
+
+    return data.story;
+  } catch (error) {
+    // Ambil dari IndexedDB saat offline
+    const cachedStory = await IDBHelper.getStory(id);
+    if (cachedStory) return cachedStory;
+    throw error;
+  }
 }
 
 /**
@@ -141,7 +160,10 @@ export async function addStoryGuest({
 /**
  * Subscribe to web push notification
  */
-export async function subscribeNotification({ endpoint, keys }) {
+export async function subscribeNotification({
+  endpoint,
+  keys: { p256dh, auth },
+}) {
   const token = localStorage.getItem("token");
   if (!token) throw new Error("Token tidak ditemukan.");
 
@@ -151,7 +173,7 @@ export async function subscribeNotification({ endpoint, keys }) {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ endpoint, keys }),
+    body: JSON.stringify({ endpoint, keys: { p256dh, auth } }),
   });
 
   const data = await response.json();

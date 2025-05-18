@@ -1,0 +1,121 @@
+{
+  "id": "/#/",
+  "start_url": "/#/",
+  "scope": "/",
+  "name": "Alvingky Sharing Stories",
+  "short_name": "Sharing Stories",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#FA812F",
+  "description": "Aplikasi untuk berbagi cerita dengan lokasi dan foto.",
+  "icons": [
+    {
+      "src": "/icon/android-icon-36x36.png",
+      "sizes": "36x36",
+      "type": "image/png",
+      "density": "0.75",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon/android-icon-48x48.png",
+      "sizes": "48x48",
+      "type": "image/png",
+      "density": "1.0",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon/android-icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "density": "1.5",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon/android-icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "density": "2.0",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon/android-icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "density": "3.0",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon/android-icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "density": "4.0",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/alvingkysharingstories_001.png",
+      "sizes": "1920x1043",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/screenshots/alvingkysharingstories_002.png",
+      "sizes": "1920x1043",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/screenshots/alvingkysharingstories_003.png",
+      "sizes": "1920x1043",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/screenshots/alvingkysharingstories_004.png",
+      "sizes": "1080x2280",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/screenshots/alvingkysharingstories_005.png",
+      "sizes": "1080x2280",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/screenshots/alvingkysharingstories_006.png",
+      "sizes": "1080x2280",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Story Baru",
+      "short_name": "Baru",
+      "description": "Membuat story baru.",
+      "url": "/?source=pwa#/add",
+      "icons": [
+        {
+          "src": "/images/add-x512.png",
+          "type": "image/png",
+          "sizes": "512x512"
+        }
+      ]
+    },
+    {
+      "name": "Story Baru sebagai Guest",
+      "short_name": "Guest",
+      "description": "Membuat story baru sebagai Guest.",
+      "url": "/?source=pwa#/guest",
+      "icons": [
+        {
+          "src": "images/guest-x512.png",
+          "type": "image/png",
+          "sizes": "512x512"
+        }
+      ]
+    }
+  ]
+}

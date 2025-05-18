@@ -92,4 +92,31 @@ export default class HomePage {
       window.feather.replace();
     }
   }
+  showLoadingMessage() {
+    this.storyListElement.innerHTML = `<p class="loading">Memuat cerita...</p>`;
+  }
+
+  showEmptyMessage() {
+    this.storyListElement.innerHTML = `<p class="empty">Belum ada cerita untuk ditampilkan.</p>`;
+  }
+
+  showErrorMessage(message) {
+    this.storyListElement.innerHTML = `<p class="error">${message}</p>`;
+  }
+
+  updatePageNumber(currentPage) {
+    this.pageNumberEl.textContent = currentPage;
+  }
+
+  setPrevButtonDisabled(isDisabled) {
+    this.prevPageBtn.disabled = isDisabled;
+  }
+
+  setNextButtonDisabled(isDisabled) {
+    this.nextPageBtn.disabled = isDisabled;
+  }
+
+  renderStoryCards(html) {
+    this.storyListElement.innerHTML = html;
+  }
 }

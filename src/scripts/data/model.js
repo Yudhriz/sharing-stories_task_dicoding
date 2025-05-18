@@ -37,8 +37,8 @@ const StoryModel = {
   },
 
   // 🔔 Web Push Notification
-  async subscribeNotification({ endpoint, keys }) {
-    return await subscribeNotification({ endpoint, keys });
+  async subscribeNotification({ endpoint, keys: { p256dh, auth } }) {
+    return await subscribeNotification({ endpoint, keys: { p256dh, auth } });
   },
 
   async unsubscribeNotification({ endpoint }) {

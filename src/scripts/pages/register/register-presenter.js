@@ -6,14 +6,12 @@ export default class RegisterPresenter {
   }
 
   async handleRegister(name, email, password) {
-    const messageBox = document.querySelector("#register-message");
-
     try {
       await StoryModel.register({ name, email, password });
-      messageBox.innerText = "Registrasi berhasil! Silakan login.";
+      this.view.showSuccessMessage("Registrasi berhasil! Silakan login.");
       window.location.hash = "/login";
     } catch (error) {
-      messageBox.innerText = `Registrasi gagal: ${error.message}`;
+      this.view.showErrorMessage(`Registrasi gagal: ${error.message}`);
     }
   }
 }

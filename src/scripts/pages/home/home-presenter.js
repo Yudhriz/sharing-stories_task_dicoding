@@ -12,12 +12,9 @@ export default class HomePresenter {
   }
 
   async renderStories() {
-    const { storyListElement, pageNumberEl, prevPageBtn, nextPageBtn } =
-      this.view;
-
-    storyListElement.innerHTML = `<p class="loading">Memuat cerita...</p>`;
-    pageNumberEl.textContent = this.currentPage;
-    prevPageBtn.disabled = this.currentPage === 1;
+    this.view.showLoadingMessage();
+    this.view.updatePageNumber(this.currentPage);
+    this.view.setPrevButtonDisabled(this.currentPage === 1);
 
     try {
       const stories = await StoryModel.getAll({
@@ -27,53 +24,51 @@ export default class HomePresenter {
       });
 
       if (!stories || stories.length === 0) {
-        storyListElement.innerHTML = `<p class="empty">Belum ada cerita untuk ditampilkan.</p>`;
-        nextPageBtn.disabled = true;
+        this.view.showEmptyMessage();
+        this.view.setNextButtonDisabled(true);
         return;
       }
 
-      storyListElement.innerHTML = stories
+      const storyHtml = stories
         .map(
           (story) => `
-            <a href="#/story/${story.id}" class="story-link">
-              <article class="story-card">
-                <img src="${story.photoUrl}" alt="Foto oleh ${
+          <a href="#/story/${story.id}" class="story-link">
+            <article class="story-card">
+              <img src="${story.photoUrl}" alt="Foto oleh ${
             story.name
           }" class="story-image" />
-                <div class="story-content">
-                  <h2>${story.name}</h2>
-                  <p>${this.view.sanitizeContent(story.description)}</p>
-                  <time datetime="${story.createdAt}">
-                    ${new Date(story.createdAt).toLocaleString()}
-                  </time>
-                </div>
-              </article>
-            </a>
-          `
+              <div class="story-content">
+                <h2>${story.name}</h2>
+                <p>${this.view.sanitizeContent(story.description)}</p>
+                <time datetime="${story.createdAt}">
+                  ${new Date(story.createdAt).toLocaleString()}
+                </time>
+              </div>
+            </article>
+          </a>
+        `
         )
         .join("");
 
-      // Disable next if jumlah story < size
-      nextPageBtn.disabled = stories.length < this.size;
+      this.view.renderStoryCards(storyHtml);
+      this.view.setNextButtonDisabled(stories.length < this.size);
 
-      // Update map markers if map exists
       if (this.map) {
         this.updateMapMarkers(stories);
       }
     } catch (error) {
-      storyListElement.innerHTML = `<p class="error">Gagal memuat cerita: ${error.message}</p>`;
-
+      this.view.showErrorMessage(`Gagal memuat cerita: ${error.message}`);
       if (error.message.includes("Token tidak ditemukan")) {
         setTimeout(() => {
           window.location.hash = "/login";
-        }, 2000); // Redirect after 2 seconds
+        }, 2000);
       }
     }
   }
 
   initMap() {
     // Initialize map without click handler (view only)
-    this.map = initializeMap("storyMap", null);
+    this.map = initializeMap("storyMap");
 
     // Set a better default view for Indonesia with higher zoom
     this.map.setView([-2.5, 118], 5.5);
